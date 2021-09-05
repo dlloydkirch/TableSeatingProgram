@@ -1,0 +1,13 @@
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.csproj.CoreCompileInputs.cache
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.AssemblyInfoInputs.cache
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.AssemblyInfo.cs
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.csproj.AssemblyReference.cache
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Davey\Downloads\SeatingProgram\bin\Debug\netcoreapp2.1\SeatingProgram.deps.json
+C:\Users\Davey\Downloads\SeatingProgram\bin\Debug\netcoreapp2.1\SeatingProgram.runtimeconfig.json
+C:\Users\Davey\Downloads\SeatingProgram\bin\Debug\netcoreapp2.1\SeatingProgram.runtimeconfig.dev.json
+C:\Users\Davey\Downloads\SeatingProgram\bin\Debug\netcoreapp2.1\SeatingProgram.dll
+C:\Users\Davey\Downloads\SeatingProgram\bin\Debug\netcoreapp2.1\SeatingProgram.pdb
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.dll
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.pdb
+C:\Users\Davey\Downloads\SeatingProgram\obj\Debug\netcoreapp2.1\SeatingProgram.genruntimeconfig.cache
