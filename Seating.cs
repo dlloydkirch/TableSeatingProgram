@@ -7,10 +7,13 @@ namespace SeatingProgram
     public class Seating
     {
 
-        public List<Table> SetTableArrancement(List<Guest> guestList)
+        public List<Table> SetTableArrancement(List<List<Guest>> guestListlarge)
         {
             List<Table> tableList = new List<Table>();
 
+foreach (var guestListOfFamily in guestListlarge)
+{
+    List<Guest> guestList = guestListOfFamily;
             while (guestList.Count > 0)
             {
                 Guest guest = guestList[0];
@@ -20,6 +23,7 @@ namespace SeatingProgram
                 {
                     Console.WriteLine("Setting up first table.");
                     Table firstTable = new Table(){
+
                         Guests = new List<Guest> (){
                             guest
                         },
@@ -51,14 +55,21 @@ namespace SeatingProgram
                                 table.Guests.Add(guest);
                             }
                         }
-                        else{
+                        else
+                        {
                             Console.WriteLine($"Table {table.TableNumber} is full.");
+                            Table newTable = new Table();
+                            newTable.Guests = new List<Guest>();
+                            newTable.Guests.Add(guest);
+                            tableList.Add(newTable);
+                            break;
                         }
 
                     }
                 }
                 guestList.Remove(guest);
             }
+}
 
             return tableList;
         }
