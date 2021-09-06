@@ -24,19 +24,20 @@ namespace SeatingProgram
             }
             else
             {
-                List<List<Guest>> tempList = new List<List<Guest>>();
-                tempList.Add(familyGroup.GuestList);
+
+                List<Guest> tempList = new List<Guest>();
+                tempList.AddRange(familyGroup.GuestList);
                 SetTableArrancement(tables, tempList);
             }
             return tables;
         }
 
-        public List<Table> SetTableArrancement(List<Table> tableList, List<List<Guest>> guestListlarge)
+        public List<Table> SetTableArrancement(List<Table> tableList, List<Guest> guestListlarge)
         {
 
             foreach (var guestListOfFamily in guestListlarge)
             {
-            List<Guest> guestList = guestListOfFamily;
+                List<Guest> guestList = guestListlarge;
                 while (guestList.Count > 0)
                 {
                     Guest guest = guestList[0];
@@ -95,10 +96,7 @@ namespace SeatingProgram
                     guestList.Remove(guest);
                 }
             }
-
-            return tableList;
+           return tableList;
         }
-
-
     }
 }

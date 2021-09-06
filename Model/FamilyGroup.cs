@@ -8,6 +8,7 @@ namespace SeatingProgram.Model
         public bool MustSitAlone { get; set; }
         public string FamilyName { get; set; }
         public bool Seated { get; set; }
+        public bool MustSitTogether { get; set; }
 
     }
 }
