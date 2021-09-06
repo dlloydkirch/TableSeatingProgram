@@ -6,70 +6,95 @@ namespace SeatingProgram
 {
     public class Seating
     {
-
-        public List<Table> SetTableArrancement(List<List<Guest>> guestListlarge)
+        public List<Table> SetFamilyTableArrangements(List<Table> tables, FamilyGroup familyGroup)
         {
-            List<Table> tableList = new List<Table>();
-
-foreach (var guestListOfFamily in guestListlarge)
-{
-    List<Guest> guestList = guestListOfFamily;
-            while (guestList.Count > 0)
+            if (familyGroup.MustSitAlone)
             {
-                Guest guest = guestList[0];
-//            foreach(var guest in guestList)
-  //          {
-                if(tableList != null && tableList.Count < 1)
+                if (familyGroup.GuestList.Count > tables[0].MaxGuestCount)
                 {
-                    Console.WriteLine("Setting up first table.");
-                    Table firstTable = new Table(){
-
-                        Guests = new List<Guest> (){
-                            guest
-                        },
-                        TableNumber = 1
-                    };
-                    tableList.Add(firstTable);
+                    throw new Exception("There are too many people in this family for one table");
                 }
-                else
+                Table firstTable = new Table()
                 {
-                    foreach (var table in tableList)
+                    Guests = familyGroup.GuestList,
+                    TableNumber = tables.Count + 1,
+                    TableFull = true
+                };
+                tables.Add(firstTable);
+            }
+            else
+            {
+                List<List<Guest>> tempList = new List<List<Guest>>();
+                tempList.Add(familyGroup.GuestList);
+                SetTableArrancement(tables, tempList);
+            }
+            return tables;
+        }
+
+        public List<Table> SetTableArrancement(List<Table> tableList, List<List<Guest>> guestListlarge)
+        {
+
+            foreach (var guestListOfFamily in guestListlarge)
+            {
+            List<Guest> guestList = guestListOfFamily;
+                while (guestList.Count > 0)
+                {
+                    Guest guest = guestList[0];
+                    //refactor to use family lists
+                    //            foreach(var guest in guestList)
+                    //          {
+                    if(tableList != null && tableList.Count < 1)
                     {
-                        bool invalidTable = false;
-                        if(table.Guests.Count < table.MaxGuestCount)
+                        Console.WriteLine("Setting up first table.");
+                        Table firstTable = new Table(){
+
+                            Guests = new List<Guest> (){
+                                guest
+                            },
+                            TableNumber = tableList.Count + 1
+                        };
+                        tableList.Add(firstTable);
+                    }
+                    else
+                    {
+                        foreach (var table in tableList)
                         {
-                            foreach(var tableGuest in table.Guests)
+                            if (table.TableFull){continue;}
+                            bool invalidTable = false;
+                            if(table.Guests.Count < table.MaxGuestCount)
                             {
-                                if(guest.CanNotSitNextoTo != null && guest.CanNotSitNextoTo.Contains(tableGuest.GuestName))
+                                foreach(var tableGuest in table.Guests)
                                 {
-                                    invalidTable = true;
+                                    if(guest.CanNotSitNextoTo != null && guest.CanNotSitNextoTo.Contains(tableGuest.GuestName))
+                                    {
+                                        invalidTable = true;
+                                    }
+                                }
+                                if (!invalidTable)
+                                {
+                                    //Logic to make sure guest who must sit next to another guest is handled.
+                                    // if (guest.MustSitNextToo.Contains(tabl)) && guest.MustSitNextToo.Count > 0)
+                                    // {
+                                    //     table.Guests.Add(guest);
+                                    // }
+                                    table.Guests.Add(guest);
                                 }
                             }
-                            if (!invalidTable)
+                            else
                             {
-                                //Logic to make sure guest who must sit next to another guest is handled.
-                                // if (guest.MustSitNextToo.Contains(tabl)) && guest.MustSitNextToo.Count > 0)
-                                // {
-                                //     table.Guests.Add(guest);
-                                // }
-                                table.Guests.Add(guest);
+                                Console.WriteLine($"Table {table.TableNumber} is full.");
+                                Table newTable = new Table();
+                                newTable.Guests = new List<Guest>();
+                                newTable.Guests.Add(guest);
+                                tableList.Add(newTable);
+                                break;
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Table {table.TableNumber} is full.");
-                            Table newTable = new Table();
-                            newTable.Guests = new List<Guest>();
-                            newTable.Guests.Add(guest);
-                            tableList.Add(newTable);
-                            break;
-                        }
 
+                        }
                     }
+                    guestList.Remove(guest);
                 }
-                guestList.Remove(guest);
             }
-}
 
             return tableList;
         }

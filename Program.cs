@@ -11,42 +11,56 @@ namespace SeatingProgram
 
             Console.WriteLine("Setting up guest list");
             List<List<Guest>> familyGuestList = new List<List<Guest>>(){};
-            List<Guest> JelksFamily = new List<Guest>(){
-                new Guest(){
-                    GuestName = "Olivia Jelks",
-                    Vaccinated = false,
-                    MustSitNextToo = new List<string>(){"Devin Kirch", "Devin Jelks"}
+            List<FamilyGroup> families = new List<FamilyGroup>();
+            FamilyGroup JelksFamily = new FamilyGroup
+            {
+                GuestList = new List<Guest>()
+                {
+                    new Guest(){
+                        GuestName = "Olivia Jelks",
+                        Vaccinated = false,
+                        MustSitNextToo = new List<string>(){"Devin Kirch", "Devin Jelks"}
+                    },
+                    new Guest(){
+                        GuestName = "Devin Jelks",
+                        Vaccinated = true,
+                        MustSitNextToo = new List<string>(){"Olivia Jelks", "Devin Kirch"}
+                    },
+                    new Guest(){
+                        GuestName = "Devin Kirch",
+                        Vaccinated = true,
+                        MustSitNextToo = new List<string>(){"Olivia Jelks", "Devin Jelks"}
+                    }
                 },
-                new Guest(){
-                    GuestName = "Devin Jelks",
-                    Vaccinated = true,
-                    MustSitNextToo = new List<string>(){"Olivia Jelks", "Devin Kirch"}
+                MustSitAlone = false
+            };
+            families.Add(JelksFamily);
+
+
+            FamilyGroup DarleneFamily = new FamilyGroup
+            {
+                GuestList = new List<Guest>()
+                {
+                    new Guest(){
+                        GuestName = "Darlene Kirch",
+                        Vaccinated = true,
+                        MustSitNextToo = new List<string>(){"Bruce Lynn"}
+                    },
+                    new Guest(){
+                        GuestName = "Bruce Lynn",
+                        Vaccinated = true,
+                        MustSitNextToo = new List<string>(){"Darlene Kirch"}
+                    }
                 },
-                new Guest(){
-                    GuestName = "Devin Kirch",
-                    Vaccinated = true,
-                    MustSitNextToo = new List<string>(){"Olivia Jelks", "Devin Jelks"}
-                },
+                MustSitAlone = false
             };
 
 
-            List<Guest> DarleneFamily = new List<Guest>(){
-                new Guest(){
-                    GuestName = "Darlene Kirch",
-                    Vaccinated = true,
-                    MustSitNextToo = new List<string>(){"Bruce Lynn"}
-                },
-                new Guest(){
-                    GuestName = "Bruce Lynn",
-                    Vaccinated = true,
-                    MustSitNextToo = new List<string>(){"Darlene Kirch"}
-                },
-            };
+            families.Add(DarleneFamily);
 
 
-
-
-            List<Guest> DanaFamily = new List<Guest>(){
+            FamilyGroup DanaFamily = new FamilyGroup{
+                GuestList = new List<Guest>(){
                 new Guest(){
                     GuestName = "Dana Greenberg",
                     Vaccinated = true
@@ -66,11 +80,15 @@ namespace SeatingProgram
                 new Guest(){
                     GuestName = "Taylor Greenberg",
                     Vaccinated = true
-                },
+                }},
+                MustSitAlone = false
             };
+                        families.Add(DanaFamily);
 
-            List<Guest> WeddingParty = new List<Guest>()
+
+            FamilyGroup WeddingParty = new FamilyGroup()
             {
+                GuestList = new List<Guest>(){
                 new Guest(){
                 GuestName = "David L Kirch",
                 Vaccinated = true,
@@ -81,37 +99,25 @@ namespace SeatingProgram
                 Vaccinated = true,
                 MustSitNextToo = new List<string>(){"David L Kirch"}
                 }
+                },
+                MustSitAlone = true
             };
 
-            familyGuestList.Add(DanaFamily);
-            familyGuestList.Add(JelksFamily);
-            familyGuestList.Add(DarleneFamily);
-            familyGuestList.Add(WeddingParty);
+            families.Add(WeddingParty);
 
-
-            // List<Guest> guestList = new List<Guest>()
-            // {
-            //     new Guest(){
-            //         GuestName = "David L Kirch",
-            //         Vaccinated = true,
-            //         MustSitNextToo = new List<string>(){"Kristina Miller"}
-            //     },
-            //     new Guest(){
-            //         GuestName = "Kristina Miller",
-            //         Vaccinated = true,
-            //         MustSitNextToo = new List<string>(){"David L Kirch"}
-            //     },
-            //     new Guest(){
-            //         GuestName = "Darlene Kirch",
-            //         Vaccinated = true,
-            //         CanNotSitNextoTo = new List<string>(){"Kristina Miller"}
-            //     },
-
-            // };
-
-
+            List<Table> results = new List<Table>();
             Seating seating = new Seating();
-            List<Table> results = seating.SetTableArrancement(familyGuestList);
+
+            foreach (var groupOfFamily in families)
+            {
+                results = seating.SetFamilyTableArrangements(results, groupOfFamily);
+            }
+
+
+            Console.WriteLine("Here is the break line.");
+
+
+            results = seating.SetTableArrancement(results, familyGuestList);
             
             foreach (var result in results)
             {
